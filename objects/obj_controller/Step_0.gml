@@ -1,9 +1,9 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+
 if (is_showing_dialogue) {
-    // 更新计时器
-    typing_timer += delta_time / 1000000; // 将微秒转换为秒
+    typing_timer += delta_time / 1000000; // ms to s
 
     if (typing_timer >= typing_speed && curr_char_index < string_length(dialogue_text)) {
         typing_timer = 0; // reset timer
@@ -58,7 +58,7 @@ if (is_showing_options) {
             if (selected_option < 0) {
                 selected_option = array_length(options) - 1;
             }
-        } until (options[selected_option][0][3]); // 跳过不满足前提条件的选项
+        } until (options[selected_option][0][3]); // ignore options whose preconditions were not met
     }
     if (keyboard_check_pressed(vk_down)) {
         do {
@@ -66,12 +66,12 @@ if (is_showing_options) {
             if (selected_option >= array_length(options)) {
                 selected_option = 0;
             }
-        } until(options[selected_option][0][3]); // 跳过不满足前提条件的选项
+        } until(options[selected_option][0][3]);  // ignore options whose preconditions were not met
     }
     if (keyboard_check_pressed(ord("E"))) {
-        // 处理选项选择逻辑
+        // on chosen
         var chosen_option = options[selected_option][0][5];
-        is_showing_options = false; // 关闭选项界面
+        is_showing_options = false;
 		obj_controller.dialogue_selector(chosen_option);
     }
 }
