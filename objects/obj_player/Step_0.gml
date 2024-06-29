@@ -50,8 +50,12 @@ else if (y > target_y) {
 if (x != target_x || y != target_y) {
 	is_moving = true;
 }
-else
+else if(is_moving){
+	if (obj_controller.player_current_health > 0) {
+		obj_controller.player_current_health -= 1*mood_matrix[mood][ATTRIBUTES.Drain_Rate];
+	}
 	is_moving = false;
+}
 	
 
 

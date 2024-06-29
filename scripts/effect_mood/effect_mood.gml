@@ -6,7 +6,6 @@ function effect_mood(_mood, _degree){
 		
 		if(_mood == obj_player.mood){
 			obj_player.stage += _degree;
-			obj_player.stage = min(obj_player.max_stages[_mood], obj_player.stage)
 		}
 		else{
 			obj_player.stage -= _degree;
@@ -15,6 +14,8 @@ function effect_mood(_mood, _degree){
 				obj_player.mood = _mood;
 			}
 		}
+		obj_player.stage = min(obj_player.max_stages[ obj_player.mood], obj_player.stage)
+		
 		obj_player.mood_color = obj_player.mood_colors[obj_player.mood][obj_player.stage];
 	}
 }

@@ -15,6 +15,16 @@ view_visible[0] = true;
 
 view_set_camera(0,_camera)
 
+// player energy
+player_max_health = 100;
+player_current_health = 100;
+health_bar_width = display_get_gui_width() - 60;
+health_bar_height = 20;
+health_bar_x = 10;
+health_bar_y = 10;
+flash_timer = 0;
+flash_speed = 5; // frequency
+
 // basic dialog
 is_showing_dialogue = false;
 text_scale = 2;
@@ -35,13 +45,14 @@ dialog_lines[0][1] = c_white
 dialog_lines[0][2] = false // shaking
 
 curr_thread_index = 0;
-// Create选项数据结构
+
+// Options
 options = [];
 selected_option = 0;
 has_option = false;
 is_showing_options = false;
 
-// 示例选项数据
+// example options
 options[0] = [
     ["Option 1: ", c_white, false],
     ["Do something", c_white, true]
@@ -59,26 +70,19 @@ options[2] = [
 options[2][0][3] = true
 
 
-
+// global flags
 flag_is_delivering = false;
 
+// dialogue bank
 function show_dialogue(_id){
 	switch _id{
 	case 1:
-		dialog_threads = [[
-			["My ", c_white, false], 
-			["wife", c_white, true], 
-			[" is going to church.", c_white, false]
-		],
+		dialog_threads = [
 		[
-			["Hey, haven't seen you in a while. ", c_white, false],
-			["How you doing? ", c_white, false]],[
 			["Look at this ", c_red, false],
 			["shaking", c_red, true],
 			[" word!", c_red, false]
-		],
-		[["Sorry, work's been pretty rough. You're always welcome to swing by my place anytime, however. ", c_white, false]]
-		]
+		]]
 		break;
 	case 2:
 		dialog_threads =[[
@@ -89,19 +93,19 @@ function show_dialogue(_id){
 			["Of course.", c_white, false]
 		];
 		options[0][0][3] = !flag_is_delivering; // condition
-		options[0][0][4] = [MOOD.HAPPY_GREEN,2]; // effective mood color and extent
+		options[0][0][4] = [MOOD.HAPPY_GREEN, 2, 30]; // effective mood color, mood effect extent, then energy charge
 		options[0][0][5] = 201; // result id, any number bigger than 100 and not used
 		options[1] = [
 			["Sorry, don't think I can lift much right now. ", c_white, false]
 		];
 		options[1][0][3] = flag_is_delivering;
-		options[1][0][4] = [MOOD.DEPRESSED_BLUE_1,1];
+		options[1][0][4] = [MOOD.DEPRESSED_BLUE, 1, 30];
 		options[1][0][5] = 202;
 		options[2] = [
 			["Sorry, don't have the time right now. ", c_white, false],
 		];
 		options[2][0][3] = true
-		options[2][0][4] = [MOOD.STRESSED_ORANGE,1];
+		options[2][0][4] = [MOOD.STRESSED_ORANGE, 1, 40];
 		options[2][0][5] = 203;
 		break;
 	case 201:
@@ -122,12 +126,7 @@ function show_dialogue(_id){
 		break;
 	case -1:
 			dialog_threads =[[
-				["Now this is a loooooooooooooooooong example to show you the auto line switch. ", c_white, false],
-				["It also has ", c_white, false],
-				["colored", c_blue, false],
-				[" and ", c_white, false],
-				["shaking", c_red, true],
-				[" text.", c_white, false]
+				["Now this is a looooooooooooooooooooooooooong example to show you the auto line switch. ", c_white, false],
 			]]
 		break;
 	case 4:

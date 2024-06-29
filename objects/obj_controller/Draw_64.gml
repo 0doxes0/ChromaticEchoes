@@ -29,6 +29,28 @@ function reset_dialog_box(){
 	curr_thread_index = 0;
 }
 
+// hp bar background
+draw_set_color(c_black);
+draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, false);
+
+var health_ratio = player_current_health / player_max_health;
+var current_health_bar_width = health_bar_width * health_ratio;
+
+// lerp hp bar from green to red
+var health_color = make_color_rgb(lerp(255, 0, health_ratio), lerp(0, 255, health_ratio), 0);
+
+// hp bar flashing
+flash_timer += delta_time / 1000000 * flash_speed;
+var flash_alpha = health_ratio > 1/3 ? 0: 3*(1/3-health_ratio); // flashes when hp goes below 1/3
+var alpha = 0.5 + 0.5 * sin(flash_timer) * flash_alpha;
+
+// draw hp bar
+draw_set_color(merge_color(health_color, make_color_rgb(0, 0, 0), 1 - alpha));
+draw_rectangle(health_bar_x, health_bar_y, health_bar_x + current_health_bar_width, health_bar_y + health_bar_height, false);
+// draw edges
+draw_set_color(c_white);
+draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, true);
+
 
 if(is_showing_dialogue){
 	draw_sprite(spr_text_box, 0, 0, 568)
@@ -49,10 +71,10 @@ if(is_showing_dialogue){
         var color = dialog_lines[_i][1];
         var shake = dialog_lines[_i][2];
 
-        // 计算当前词语的长度
+        // current part's length
         current_length += string_length(text_part);
 
-        // 剪切当前词语，以适应当前显示的字符索引
+        // check to which index it is typing and cut the rest
         if (current_length > curr_char_index) {
             text_part = string_copy(text_part, 1, string_length(text_part) - (current_length - curr_char_index));
         }
@@ -131,16 +153,14 @@ if (is_showing_options) {
     var option_height = 100;
     var line_height = 20 * text_scale;
 
-    // 绘制选项框
     draw_sprite(spr_text_box, 0, 0, 568);
 
-    // 绘制每个选项
     var draw_x = option_x + 10;
     var draw_y = option_y + 10;
 
     for (var i = 0; i < array_length(options); i++) {
-        if (options[i][0][3]) { // 检查前提条件
-            // 高亮选中的选项
+        if (options[i][0][3]) { // precondition check, if false, option will not appear
+            // highlighter
             if (i == selected_option) {
                 draw_sprite_stretched(spr_highlight_box, 0, draw_x - 40, draw_y , option_width+40, option_height/2); // 高亮边框精灵
             }
@@ -159,15 +179,15 @@ if (is_showing_options) {
                 
                 draw_x += string_width(text_part) * text_scale;
 
-                // 如果选项过长，分成多行显示
-                var text_width = string_width(text_part) * text_scale;
-                if (draw_x + text_width > option_x + option_width - 30) {
-                    draw_x = option_x + 10;
-                    draw_y += line_height;
-                }
+                //// option line switch?
+                //var text_width = string_width(text_part) * text_scale;
+                //if (draw_x + text_width > option_x + option_width - 30) {
+                //    draw_x = option_x + 10;
+                //    draw_y += line_height;
+                //}
             }
-            draw_x = option_x + 10; // 重置x坐标
-            draw_y += line_height; // 增加y坐标
+            draw_x = option_x + 10; // reset
+            draw_y += line_height; // next line
         }
     }
 }
