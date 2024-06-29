@@ -52,7 +52,11 @@ if (x != target_x || y != target_y) {
 }
 else if(is_moving){
 	if (obj_controller.player_current_health > 0) {
+<<<<<<< HEAD
 		obj_controller.player_current_health -= 1*mood_matrix[mood][ATTRIBUTES.Drain_Rate];
+=======
+		obj_controller.player_current_health -= 1;
+>>>>>>> 6e1d2af734ec731d2ef2aead41621f182428acaa
 	}
 	is_moving = false;
 }
