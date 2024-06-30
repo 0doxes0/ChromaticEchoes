@@ -77,6 +77,8 @@ if (is_showing_options) {
 		
         var chosen_option = options[selected_option][0][5];
         is_showing_options = false;
-		obj_controller.dialogue_selector(chosen_option);
+		if (chosen_option != -1){
+			obj_controller.dialogue_selector(chosen_option);
+		}
     }
 }

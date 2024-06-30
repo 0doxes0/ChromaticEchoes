@@ -83,7 +83,7 @@ if(is_showing_dialogue){
         var text_width = string_width(text_part) * text_scale;
 		if(text_width < dialogue_width/3){
 			//short exceeding message will turn to the next line
-			if (draw_x + text_width > dialogue_x + dialogue_width - 30) {
+			if (draw_x + text_width > dialogue_x + dialogue_width - 50) {
 				draw_x = dialogue_x + 10;
 				draw_y += line_height;
 				if (draw_y >= dialogue_y + dialogue_height - 10) {
@@ -91,14 +91,14 @@ if(is_showing_dialogue){
 				}
 			}
 		}else // long exceeding message will split into two
-        if (draw_x + text_width > dialogue_x + dialogue_width - 30) {
+        if (draw_x + text_width > dialogue_x + dialogue_width - 50) {
             var last_space_index = 0;
             for (var j = 1; j <= string_length(text_part); j++) {
                 if string_char_at(text_part, j) == " " {
                     last_space_index = j;
                 }
 
-                if (draw_x + string_width(string_copy(text_part, 1, j)) * text_scale > dialogue_x + dialogue_width - 30) {
+                if (draw_x + string_width(string_copy(text_part, 1, j)) * text_scale > dialogue_x + dialogue_width - 50) {
                     if (last_space_index == 0) {
                         // no space can be found in the long message, proceeding to hard break
                         var split_index = j - 1;
@@ -125,7 +125,7 @@ if(is_showing_dialogue){
                     j = 0;
                     last_space_index = 0;
 
-                    if (draw_y >= dialogue_y + dialogue_height - 10) {
+                    if (draw_y >= dialogue_y + dialogue_height - 50) {
                         break;// height limit break
                     }
                 }
