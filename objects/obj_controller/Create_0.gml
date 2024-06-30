@@ -139,7 +139,7 @@ function show_dialogue(_id){
 		options[1] = [
 			["Yeah, it’s been pretty quiet mostly.", c_white, false]
 		];
-		options[1][0][3] = flag_is_delivering;
+		options[1][0][3] = true;
 		options[1][0][4] = [MOOD.DEPRESSED_BLUE, 1, 20];
 		options[1][0][5] = -1;
 		options[2] = [
@@ -163,7 +163,7 @@ function show_dialogue(_id){
 		options[1] = [
 			["I don't know. I haven't seen him in awhile.", c_white, false]
 		];
-		options[1][0][3] = flag_is_delivering;
+		options[1][0][3] = true;
 		options[1][0][4] = [MOOD.ANGRY_RED, 3, 30];
 		options[1][0][5] = -1;
 		options[2] = [
@@ -187,7 +187,7 @@ function show_dialogue(_id){
 		options[1] = [
 			["I hope it doesn't quite yet. I still need to finish painting my house.", c_white, false]
 		];
-		options[1][0][3] = flag_is_delivering;
+		options[1][0][3] = true;
 		options[1][0][4] = [MOOD.STRESSED_ORANGE, 1, 10];
 		options[1][0][5] = -1;
 		options[2] = [
@@ -361,7 +361,7 @@ function show_dialogue(_id){
 		options[1] = [
 			["Seriously? Won't that make everything more crowded?", c_white, false]
 		];
-		options[1][0][3] = flag_is_delivering;
+		options[1][0][3] = true;
 		options[1][0][4] = [MOOD.ANGRY_RED, 4, 40];
 		options[1][0][5] = -1;
 		options[2] = [
@@ -385,7 +385,7 @@ function show_dialogue(_id){
 		options[1] = [
 			["I'd love to, but I don't think I have much room for it. ", c_white, false]
 		];
-		options[1][0][3] = flag_is_delivering;
+		options[1][0][3] = true;
 		options[1][0][4] = [MOOD.HAPPY_GREEN, 1, 20];
 		options[1][0][5] = -1;
 		options[2] = [
@@ -403,6 +403,8 @@ function show_dialogue(_id){
 			]]
 		break;
 	case 4:
+		break;
+	case -1:
 		break;
 	default:
 		is_showing_dialogue = false;
