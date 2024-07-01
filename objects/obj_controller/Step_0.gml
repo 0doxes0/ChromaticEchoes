@@ -37,7 +37,9 @@ if (is_showing_dialogue) {
 			{
 				if(has_option){
 					is_showing_options = true;
-					has_option = false;
+				}
+				else if(has_next){
+					dialogue_selector(next);
 				}
 				else is_showing_dialogue = false;
 			}
@@ -70,7 +72,6 @@ if (is_showing_options) {
     }
     if (keyboard_check_pressed(ord("E"))) {
         // on chosen
-		// options[selected_option][0][4] = [MOOD.HAPPY_GREEN, 2, 30]
 		player_current_health += options[selected_option][0][4][2]  * obj_player.mood_matrix[obj_player.mood][options[selected_option][0][4][0]]
 		player_current_health = min(player_max_health, player_current_health)
 		effect_mood(options[selected_option][0][4][0], options[selected_option][0][4][1])
@@ -79,6 +80,7 @@ if (is_showing_options) {
         is_showing_options = false;
 		if (chosen_option != -1){
 			obj_controller.dialogue_selector(chosen_option);
-		}
+		}else
+			is_showing_dialogue = false
     }
 }

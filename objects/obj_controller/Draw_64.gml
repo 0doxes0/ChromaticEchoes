@@ -3,7 +3,7 @@
 
 // a method that would draw the text shaking
 function draw_shaking_text(x, y, _text, _xscale, _yscale, _rotation) {
-    var _shake_strength = 2;
+    var _shake_strength = 1;
     var _shake_x = irandom_range(-_shake_strength, _shake_strength);
     var _shake_y = irandom_range(-_shake_strength, _shake_strength);
     draw_text_transformed(x + _shake_x, y + _shake_y, _text, _xscale, _yscale, _rotation);
@@ -11,6 +11,10 @@ function draw_shaking_text(x, y, _text, _xscale, _yscale, _rotation) {
 
 // invoke a particular line in a particular dialogue
 function dialogue_selector(_id){
+	options=[]
+	has_next = false;
+	has_option = false;
+	has_nametag = false;
 	dialogue_id = _id;
 	dialogue_session = 0;
 	show_dialogue(dialogue_id);
@@ -30,8 +34,8 @@ function reset_dialog_box(){
 }
 
 // hp bar background
-draw_set_color(c_black);
-draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, false);
+//draw_set_color(c_black);
+//draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, false);
 
 var health_ratio = player_current_health / player_max_health;
 var current_health_bar_width = health_bar_width * health_ratio;
@@ -48,15 +52,28 @@ var alpha = 0.5 + 0.5 * sin(flash_timer) * flash_alpha;
 draw_set_color(merge_color(health_color, make_color_rgb(0, 0, 0), 1 - alpha));
 draw_rectangle(health_bar_x, health_bar_y, health_bar_x + current_health_bar_width, health_bar_y + health_bar_height, false);
 // draw edges
-draw_set_color(c_white);
-draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, true);
+//draw_set_color(c_white);
+//draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, true);
+draw_sprite_stretched(spr_BarOutliner, 0, health_bar_x-4, health_bar_y-4, health_bar_x + health_bar_width, health_bar_y + health_bar_height)
 
+if (player_current_health <= 0 && !gameended){
+	gameended=true;
+	draw_set_color(c_black);
+	draw_rectangle(0,0,display_get_gui_width(),display_get_gui_height(),false)
+	dialogue_selector(-100)
+}
 
-if(is_showing_dialogue){
-	draw_sprite(spr_text_box, 0, 0, 568)
+if(is_showing_dialogue && !is_showing_options){
+	draw_sprite_stretched(spr_text_box, 0, 0, display_get_gui_height()*2/3, display_get_gui_width(), display_get_gui_height()/3 )
 	
-	var dialogue_x = 40;
-    var dialogue_y = display_get_gui_height() - 180;
+	if(has_nametag){
+		draw_set_color(c_white);
+		draw_sprite_stretched(spr_nametag, 0, 40, display_get_gui_height()*2/3 - 20, 120, 30)
+		draw_text(50, display_get_gui_height()*2/3 - 16, nametag);
+	}
+	
+	var dialogue_x = 20;
+    var dialogue_y = display_get_gui_height()*2/3 + 10;
     var dialogue_width = display_get_gui_width();
     var dialogue_height = 100;
 	var line_height = 20 * text_scale;
@@ -148,12 +165,12 @@ if(is_showing_dialogue){
 
 if (is_showing_options) {
     var option_x = 40;
-    var option_y = display_get_gui_height() - 180;
+    var option_y = display_get_gui_height() *2/3 + 10;
     var option_width = display_get_gui_width() - 80;
     var option_height = 100;
     var line_height = 20 * text_scale;
 
-    draw_sprite(spr_text_box, 0, 0, 568);
+	draw_sprite_stretched(spr_text_box, 0, 0, display_get_gui_height()*2/3, display_get_gui_width(), display_get_gui_height()/3 )
 
     var draw_x = option_x + 10;
     var draw_y = option_y + 10;
@@ -162,7 +179,7 @@ if (is_showing_options) {
         if (options[i][0][3]) { // precondition check, if false, option will not appear
             // highlighter
             if (i == selected_option) {
-                draw_sprite_stretched(spr_highlight_box, 0, draw_x - 40, draw_y , option_width+40, option_height/2); // 高亮边框精灵
+                draw_sprite_stretched(spr_highlight_box, 0, draw_x - 40, draw_y , option_width+40, option_height/4); // 高亮边框精灵
             }
 
             for (var j = 0; j < array_length(options[i]); j++) {

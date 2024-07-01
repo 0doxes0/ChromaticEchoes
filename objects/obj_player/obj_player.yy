@@ -13,7 +13,10 @@
     "name":"Objects",
     "path":"folders/Objects.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_solid_parent",
+    "path":"objects/obj_solid_parent/obj_solid_parent.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -37,8 +40,8 @@
   "resourceVersion":"2.0",
   "solid":true,
   "spriteId":{
-    "name":"Sprite1",
-    "path":"sprites/Sprite1/Sprite1.yy",
+    "name":"PlayerFront",
+    "path":"sprites/PlayerFront/PlayerFront.yy",
   },
   "spriteMaskId":null,
   "visible":true,
