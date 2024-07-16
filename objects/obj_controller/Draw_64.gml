@@ -44,18 +44,22 @@ var current_health_bar_width = health_bar_width * health_ratio;
 
 // lerp hp bar from green to red
 var health_color = obj_player.mood_color;
+draw_set_color(health_color);
 
 // hp bar flashing
+if (health_ratio < 1/3){
 flash_timer += delta_time / 1000000 * flash_speed;
-var flash_alpha = health_ratio > 1/3 ? 0: 3*(1/3-health_ratio); // flashes when hp goes below 1/3
-var alpha = 0.5 + 0.5 * sin(flash_timer) * flash_alpha;
-
+	var flash_alpha = 3*(1/3-health_ratio); // flashes when hp goes below 1/3
+	var alpha = 0.5 + 0.5 * sin(flash_timer) * flash_alpha;
+	draw_set_color(merge_color(health_color, make_color_rgb(0, 0, 0), 1 - alpha));
+}
 // draw hp bar
-draw_set_color(merge_color(health_color, make_color_rgb(0, 0, 0), 1 - alpha));
 draw_rectangle(health_bar_x, health_bar_y, health_bar_x + current_health_bar_width, health_bar_y + health_bar_height, false);
+
 // draw edges
 //draw_set_color(c_white);
 //draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, true);
+
 draw_sprite_stretched(spr_BarOutliner, 0, health_bar_x-4, health_bar_y-4, health_bar_x + health_bar_width, health_bar_y + health_bar_height)
 
 if (player_current_health <= 0 && !gameended){
