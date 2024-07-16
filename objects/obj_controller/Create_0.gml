@@ -27,18 +27,23 @@ view_set_hport(0, RES.HEIGHT);
 // GUI 大小设置
 display_set_gui_size(RES.WIDTH, RES.HEIGHT);
 
+//face mood indicator
+sadfaces = [Sprite19 ,spr_face_happy, spr_face_angry, spr_face_stressed, spr_face_sad, spr_face_anxiety]
+faceSize = 3
+moodTooltips = ["Vacant", "Happy", "Angry", "Stressed", "Sad", "Anxious"]
+TooltipFont = 1;
 
 // player energy
 player_max_health = 100;
 player_current_health = 100;
 health_bar_width = display_get_gui_width() - 60;
 health_bar_height = 20;
-health_bar_x = 10;
+health_bar_x = 24;
 health_bar_y = 10;
 flash_timer = 0;
 flash_speed = 5; // frequency
 
-randomize();//random seed regen
+randomize(); //random seed regen
 
 // basic dialog
 is_showing_dialogue = false;
@@ -441,6 +446,203 @@ function show_dialogue(_id){
 		break;
 	case -101:
 		game_end();
+		break;
+	// Special: Father
+	case -200:
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["Hey son. ", c_white, false],
+			]]
+			has_next = true;
+			next = -201;
+		break;
+	case -201:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["Hi, dad. ", c_white, false],
+			]]
+			has_next = true;
+			next = -202;
+		break;
+	case -202:
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["Still can't cheer up, huh? ", c_white, false],
+			]]
+			has_next = true;
+			next = -203;
+		break;
+	case -203:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["Dad..", c_white, false],
+			]]
+			has_next = true;
+			next = -204;
+		break;
+	case -204:
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["- It's been a year now. ", c_white, false],
+			]]
+			has_next = true;
+			next = -205;
+		break;
+	case -205:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["She's gone, dad! How can I just cheer up after she died?!", c_white, false],
+			]]
+			has_next = true;
+			next = -206;
+		break;
+	case -206:
+			effect_mood(MOOD.ANGRY_RED,1);
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["Yeah I get it, but life can't just keep ", c_white, false],
+				["waiting ", c_red, false],
+				["for you! You need to get back up on that horse, you know?", c_white, false]
+			]]
+			has_next = true;
+			next = -207;
+		break;
+	case -207:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["...", c_white, false],
+			]]
+			has_next = true;
+			next = -208;
+		break;
+	case -208:
+			effect_mood(MOOD.ANGRY_RED,1);
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["Everyone loses people, son. How long are you going to let yourself be trapped like this? ", c_white, false],
+				["Reality isn't going to change anytime soon.", c_red, false]
+			]]
+			has_next = true;
+			next = -209;
+		break;
+	case -209:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["How can you even say that?! She meant more to me than I do to myself. I can't just move on and leave her behind like that!", c_white, false],
+			]]
+			has_next = true;
+			next = -210;
+		break;
+	case -210:
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["Talking like that is useless! How is bumming around town going to help you move on at all? Walking around feeling sorry for yourself isn't helping!", c_white, false],
+			]]
+			has_next = true;
+			next = -211;
+		break;
+	case -211:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["Seriously dad? Mom's still around, would you be talking like that if she died too? ", c_white, false],
+			]]
+			has_next = true;
+			next = -212;
+		break;
+	case -212:
+			effect_mood(MOOD.PANIC_PURPLE,1);
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["Hey! I'm just trying to help you pull your head out of the", c_white, false],
+				[" past ", c_purple, false],
+				["so you can go back to being you!", c_white, false]
+			]]
+			has_next = true;
+			next = -213;
+		break;
+	case -213:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["Did I go somewhere? I'm still me, I never stopped. ", c_white, false],
+			]]
+			has_next = true;
+			next = -214;
+		break;
+	case -214:
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["The old you wouldn't waste away ", c_white, false],
+				["feeling sorry for yourself. ", c_red, false]
+			]]
+			has_next = true;
+			next = -215;
+		break;
+	case -215:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["The old me? ", c_white, false],
+			]]
+			has_next = true;
+			next = -216;
+		break;
+	case -216:
+			effect_mood(MOOD.ANGRY_RED,10);
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["I'm trying to help you out, son. Locking yourself up in a ", c_white, false],
+				["cage", c_white, true],
+				[" like this isn't helping you move on." , c_white, false]				
+			]]
+			has_next = true;
+			next = -217;
+		break;
+	case -217:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["I don't need your help, dad! You aren't helping anyone!", c_white, false],
+			]]
+			has_next = true;
+			next = -218;
+		break;
+	case -218:
+			nametag = "Father"
+			has_nametag = true
+			dialog_threads =[[
+				["I've lost people too. I know it hurts, but you're acting like your loss is special! Everyone out there has the same", c_white, false],
+				[" pain ", c_blue, false],
+				["as you!", c_white, false]
+			]]
+			has_next = true;
+			next = -219;
+		break;
+	case -219:
+			nametag = "Player"
+			has_nametag = true
+			dialog_threads =[[
+				["I can't do this anymore. What kind of father talks like this? ", c_white, false],
+			]]
+			has_next = false;
+		break;
+	//end of Father dialogue	
+	
 	case -1:
 	default:
 		is_showing_dialogue = false;

@@ -1,6 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
 conversed = false;
+animation_speed = 0.025;
+frame = 0;
 
 move_range = 2; // 可以移动的格子数,这里设为2表示5x5的范围
 start_x = x;

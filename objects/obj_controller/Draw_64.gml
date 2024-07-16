@@ -33,6 +33,8 @@ function reset_dialog_box(){
 	curr_thread_index = 0;
 }
 
+
+
 // hp bar background
 //draw_set_color(c_black);
 //draw_rectangle(health_bar_x, health_bar_y, health_bar_x + health_bar_width, health_bar_y + health_bar_height, false);
@@ -41,7 +43,7 @@ var health_ratio = player_current_health / player_max_health;
 var current_health_bar_width = health_bar_width * health_ratio;
 
 // lerp hp bar from green to red
-var health_color = make_color_rgb(lerp(255, 0, health_ratio), lerp(0, 255, health_ratio), 0);
+var health_color = obj_player.mood_color;
 
 // hp bar flashing
 flash_timer += delta_time / 1000000 * flash_speed;
@@ -62,6 +64,13 @@ if (player_current_health <= 0 && !gameended){
 	draw_rectangle(0,0,display_get_gui_width(),display_get_gui_height(),false)
 	dialogue_selector(-100)
 }
+
+
+draw_sprite_stretched(sadfaces[obj_player.mood], 0, health_bar_x, health_bar_y + 30, health_bar_x + faceSize, health_bar_y + 15 + faceSize)
+draw_set_color(c_black);
+draw_text_transformed(health_bar_x + faceSize + 30.5, health_bar_y + 36, moodTooltips[obj_player.mood], TooltipFont, TooltipFont, 0)
+draw_set_color(health_color);
+draw_text_transformed(health_bar_x + faceSize + 30, health_bar_y + 35, moodTooltips[obj_player.mood], TooltipFont, TooltipFont, 0)
 
 if(is_showing_dialogue && !is_showing_options){
 	draw_sprite_stretched(spr_text_box, 0, 0, display_get_gui_height()*2/3, display_get_gui_width(), display_get_gui_height()/3 )
