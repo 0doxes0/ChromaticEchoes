@@ -1,6 +1,29 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+global.conversedFather = false;
+global.conversed0 = false;
+global.conversed1 = false;
+global.conversed2 = false;
+global.conversed3 = false;
+global.conversed4 = false;
+global.conversed5 = false;
+
+
+
+function start_end_sequence() {
+    instance_create_layer(0, 0, "Instances", obj_end_sequence);
+    
+    // 禁用所有其他对象的绘制
+    with (all) {
+        if (id != obj_end_sequence.id) {
+            visible = false;
+        }
+    }
+}
+
+can_proceed = true;
+
 // Camera set up
 enum RES {
     WIDTH = 683,
@@ -421,14 +444,21 @@ function show_dialogue(_id){
 			]]
 		break;
 	case -3:
+			effect_mood(MOOD.HAPPY_GREEN, 10)
 			nametag = "Dog"
 			has_nametag = true
 			dialog_threads =[[
 				["*Bark! Bark!* ", c_white, true],
 				["(Are you looking for me?)", c_white, false]
 			]]
+			has_next = true;
+			next = -4;
 		break;
-	
+	case -4:
+			start_end_sequence();
+			effect_mood(MOOD.ANGRY_RED, 10)
+			is_showing_dialogue = false;
+		break;
 	case -100:
 			dialog_threads =[[
 				["You're exhaulsted. ", c_white, false],
@@ -562,7 +592,6 @@ function show_dialogue(_id){
 			next = -212;
 		break;
 	case -212:
-			effect_mood(MOOD.PANIC_PURPLE,1);
 			nametag = "Father"
 			has_nametag = true
 			dialog_threads =[[
@@ -602,7 +631,7 @@ function show_dialogue(_id){
 			next = -216;
 		break;
 	case -216:
-			effect_mood(MOOD.ANGRY_RED,10);
+			effect_mood(MOOD.ANGRY_RED,2);
 			nametag = "Father"
 			has_nametag = true
 			dialog_threads =[[

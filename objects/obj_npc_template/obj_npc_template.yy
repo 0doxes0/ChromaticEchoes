@@ -41,8 +41,8 @@
   "resourceVersion":"2.0",
   "solid":true,
   "spriteId":{
-    "name":"NPC1",
-    "path":"sprites/NPC1/NPC1.yy",
+    "name":"MaleNPC",
+    "path":"sprites/MaleNPC/MaleNPC.yy",
   },
   "spriteMaskId":null,
   "visible":true,

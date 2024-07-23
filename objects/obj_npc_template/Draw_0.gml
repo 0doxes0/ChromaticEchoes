@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-if(!conversed){
+if(!global.conversed0){
 	draw_sprite(spr_bubble, frame, x+5, y-22)
 }
 

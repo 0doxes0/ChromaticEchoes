@@ -48,7 +48,7 @@ draw_set_color(health_color);
 
 // hp bar flashing
 if (health_ratio < 1/3){
-flash_timer += delta_time / 1000000 * flash_speed;
+	flash_timer += delta_time / 1000000 * flash_speed;
 	var flash_alpha = 3*(1/3-health_ratio); // flashes when hp goes below 1/3
 	var alpha = 0.5 + 0.5 * sin(flash_timer) * flash_alpha;
 	draw_set_color(merge_color(health_color, make_color_rgb(0, 0, 0), 1 - alpha));
